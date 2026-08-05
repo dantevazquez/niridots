@@ -1,0 +1,137 @@
+input {
+    keyboard {
+        xkb {
+            options "caps:escape"
+        }
+
+        numlock
+    }
+
+    touchpad {
+        tap
+    }
+
+}
+
+/-output "eDP-1" {
+    scale 2.5
+    transform "normal"
+}
+
+layout {
+    gaps 0
+    
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { proportion 0.5; }
+    focus-ring {
+        off
+    }
+
+    border {
+        width 0
+    }
+
+}
+
+spawn-at-startup "noctalia"
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// Open all windows maximized by default.
+window-rule {
+    open-maximized true
+}
+
+// Open LocalSend centered floating at top
+window-rule {
+    match app-id=r#"(?i)localsend"#
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.6; }
+}
+
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}
+
+binds {
+    Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot tmux new-session -A -s code; fi"; }
+    Mod+b hotkey-overlay-title="Run an Application: Chromium" { spawn "chromium"; }
+    Mod+P hotkey-overlay-title="Pick a color" { spawn "hyprpicker" "-a"; }
+    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+I { spawn-sh "noctalia msg panel-toggle control-center"; }
+    XF86Favorites { spawn "localsend_app"; }
+    Mod+Shift+P {spawn-sh "noctalia msg panel-toggle session";}
+
+    Print { spawn-sh "noctalia msg screenshot-region"; }
+    // Audio & Brightness
+    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+
+    Mod+Q repeat=false { close-window; }
+
+    Alt+H     { focus-column-left; }
+    Alt+J     { focus-window-down; }
+    Alt+K     { focus-window-up; }
+    Alt+L     { focus-column-right; }
+    Alt+Shift+Left  { focus-monitor-left; }
+    Alt+Shift+Down  { focus-monitor-down; }
+    Alt+Shift+Up    { focus-monitor-up; }
+    Alt+Shift+Right { focus-monitor-right; }
+    Alt+Shift+H     { focus-monitor-left; }
+    Alt+Shift+J     { focus-monitor-down; }
+    Alt+Shift+K     { focus-monitor-up; }
+    Alt+Shift+L     { focus-monitor-right; }
+    Alt+1 { focus-workspace 1; }
+    Alt+2 { focus-workspace 2; }
+    Alt+3 { focus-workspace 3; }
+    Alt+4 { focus-workspace 4; }
+    Alt+5 { focus-workspace 5; }
+    Alt+6 { focus-workspace 6; }
+    Alt+7 { focus-workspace 7; }
+    Alt+8 { focus-workspace 8; }
+    Alt+9 { focus-workspace 9; }
+    Alt+Ctrl+1 { move-column-to-workspace 1; }
+    Alt+Ctrl+2 { move-column-to-workspace 2; }
+    Alt+Ctrl+3 { move-column-to-workspace 3; }
+    Alt+Ctrl+4 { move-column-to-workspace 4; }
+    Alt+Ctrl+5 { move-column-to-workspace 5; }
+    Alt+Ctrl+6 { move-column-to-workspace 6; }
+    Alt+Ctrl+7 { move-column-to-workspace 7; }
+    Alt+Ctrl+8 { move-column-to-workspace 8; }
+    Alt+Ctrl+9 { move-column-to-workspace 9; }
+    Alt+M { maximize-window-to-edges; }
+    Alt+Ctrl+F { expand-column-to-available-width; }
+    Alt+Minus { set-column-width "-10%"; }
+    Alt+Equal { set-column-width "+10%"; }
+    Alt+Shift+Minus { set-window-height "-10%"; }
+    Alt+Shift+Equal { set-window-height "+10%"; }
+    Super+Shift+1 { spawn "~/.config/niri/focus-by-order.py" "1"; }
+    Super+Shift+2 { spawn "~/.config/niri/focus-by-order.py" "2"; }
+    Super+Shift+3 { spawn "~/.config/niri/focus-by-order.py" "3"; }
+    Super+Shift+4 { spawn "~/.config/niri/focus-by-order.py" "4"; }
+    Super+Shift+5 { spawn "~/.config/niri/focus-by-order.py" "5"; }
+    Super+Shift+6 { spawn "~/.config/niri/focus-by-order.py" "6"; }
+    Super+Shift+7 { spawn "~/.config/niri/focus-by-order.py" "7"; }
+    Super+Shift+8 { spawn "~/.config/niri/focus-by-order.py" "8"; }
+    Super+Shift+9 { spawn "~/.config/niri/focus-by-order.py" "9"; }
+}
+
+include "noctalia.kdl"
