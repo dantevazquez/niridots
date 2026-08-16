@@ -28,7 +28,7 @@ order = [ "default" ]
     capsule_opacity = 1.0
     capsule_padding = 6.0
     capsule_thickness = 0.75999999046325684
-    center = [ "cat", "bar" ]
+    center = [ "taskbar" ]
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
@@ -53,7 +53,7 @@ order = [ "default" ]
     shadow = false
     show_on_workspace_switch = true
     smart_auto_hide = false
-    start = [ "session", "workspaces" ]
+    start = [ "workspaces" ]
     thickness = 34
     widget_spacing = 6
 
@@ -336,7 +336,7 @@ scale = 1.0
 
 [plugins]
 auto_update = true
-enabled = [ "dotnetrob/cat" ]
+enabled = []
 
     [[plugins.source]]
     enabled = true
@@ -553,16 +553,16 @@ swap_pct_critical_threshold = 80.0
 
 [theme]
 builtin = "Catppuccin"
-community_palette = "Catppuccin Frappe Lavender"
+community_palette = "Catppuccin Frappe Blue"
 custom_palette = ""
 mode = "dark"
 pure_black_dark = false
-source = "builtin"
+source = "community"
 wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
-    builtin_ids = [ "btop", "foot", "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
-    community_ids = [ "pywalfox", "neovim", "lazygit", "yazi" ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
+    community_ids = [ "lazygit", "yazi" ]
     enable_builtin_templates = true
     enable_community_templates = true
 
@@ -679,3 +679,7 @@ type = "sysmon"
 [widget.volume]
 enabled = false
 type = "volume"
+
+[widget.workspaces]
+hide_when_empty = true
+type = "workspaces"

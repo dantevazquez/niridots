@@ -9,12 +9,17 @@ input {
 
     touchpad {
         tap
+        // scroll-factor 0.1
+        dwt
     }
 
 }
+xwayland-satellite {
+  off
+}
 
-/-output "eDP-1" {
-    scale 2.5
+output "eDP-1" {
+    scale 2
     transform "normal"
 }
 
@@ -41,6 +46,7 @@ layout {
 }
 
 spawn-at-startup "noctalia"
+spawn-at-startup "sh" "-c" "cd \"$HOME/Downloads\" && nohup monosend receive --autoaccept >/dev/null 2>&1 &"
 
 hotkey-overlay {
     skip-at-startup
@@ -55,69 +61,74 @@ window-rule {
     open-maximized true
 }
 
-// Open LocalSend centered floating at top
-window-rule {
-    match app-id=r#"(?i)localsend"#
-    open-floating true
-    default-column-width { proportion 0.5; }
-    default-window-height { proportion 0.6; }
-}
-
 window-rule {
     geometry-corner-radius 0
     clip-to-geometry true
 }
+animations {
+    off
+}
 
 binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot tmux new-session -A -s code; fi"; }
-    Mod+b hotkey-overlay-title="Run an Application: Chromium" { spawn "chromium"; }
-    Mod+P hotkey-overlay-title="Pick a color" { spawn "hyprpicker" "-a"; }
+
+    // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+B hotkey-overlay-title="Run Chromium" { spawn "chromium-browser"; }
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
+    // Mod+I { spawn-sh "$HOME/.config/niri/status-osd.sh"; }
     Mod+I { spawn-sh "noctalia msg panel-toggle control-center"; }
-    XF86Favorites { spawn "localsend_app"; }
     Mod+Shift+P {spawn-sh "noctalia msg panel-toggle session";}
-
-    Print { spawn-sh "noctalia msg screenshot-region"; }
+    Mod+P { spawn "hyprpicker" "-a"; }
+    Alt+Shift+4 { spawn-sh "noctalia msg screenshot-region"; }
+    // Mod+P {
+    //     spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
+    // }
     // Audio & Brightness
-    XF86AudioRaiseVolume { spawn-sh "noctalia msg volume-up"; }
-    XF86AudioLowerVolume { spawn-sh "noctalia msg volume-down"; }
-    XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
-    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
-    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+    // xf86audioraisevolume { spawn-sh "$home/.config/niri/volume-osd.sh up"; }
+    // xf86audiolowervolume { spawn-sh "$home/.config/niri/volume-osd.sh down"; }
+    // xf86audiomute { spawn-sh "$home/.config/niri/volume-osd.sh mute"; }
+    // xf86monbrightnessup { spawn-sh "$home/.config/niri/brightness-osd.sh up"; }
+    // xf86monbrightnessdown { spawn-sh "$home/.config/niri/brightness-osd.sh down"; }
 
-    Mod+Q repeat=false { close-window; }
+    xf86audioraisevolume { spawn-sh "noctalia msg volume-up"; }
+    xf86audiolowervolume { spawn-sh "noctalia msg volume-down"; }
+    xf86audiomute { spawn-sh "noctalia msg volume-mute"; }
+    xf86monbrightnessup { spawn-sh "noctalia msg brightness-up"; }
+    xf86monbrightnessdown { spawn-sh "noctalia msg brightness-down"; }
 
-    Alt+H     { focus-column-left; }
-    Alt+J     { focus-window-down; }
-    Alt+K     { focus-window-up; }
-    Alt+L     { focus-column-right; }
-    Alt+Shift+Left  { focus-monitor-left; }
-    Alt+Shift+Down  { focus-monitor-down; }
-    Alt+Shift+Up    { focus-monitor-up; }
-    Alt+Shift+Right { focus-monitor-right; }
-    Alt+Shift+H     { focus-monitor-left; }
-    Alt+Shift+J     { focus-monitor-down; }
-    Alt+Shift+K     { focus-monitor-up; }
-    Alt+Shift+L     { focus-monitor-right; }
-    Alt+1 { focus-workspace 1; }
-    Alt+2 { focus-workspace 2; }
-    Alt+3 { focus-workspace 3; }
-    Alt+4 { focus-workspace 4; }
-    Alt+5 { focus-workspace 5; }
-    Alt+6 { focus-workspace 6; }
-    Alt+7 { focus-workspace 7; }
-    Alt+8 { focus-workspace 8; }
-    Alt+9 { focus-workspace 9; }
-    Alt+Ctrl+1 { move-column-to-workspace 1; }
-    Alt+Ctrl+2 { move-column-to-workspace 2; }
-    Alt+Ctrl+3 { move-column-to-workspace 3; }
-    Alt+Ctrl+4 { move-column-to-workspace 4; }
-    Alt+Ctrl+5 { move-column-to-workspace 5; }
-    Alt+Ctrl+6 { move-column-to-workspace 6; }
-    Alt+Ctrl+7 { move-column-to-workspace 7; }
-    Alt+Ctrl+8 { move-column-to-workspace 8; }
-    Alt+Ctrl+9 { move-column-to-workspace 9; }
-    Alt+M { maximize-window-to-edges; }
+    mod+q repeat=false { close-window; }
+
+    alt+h     { focus-column-left; }
+    alt+j     { focus-window-down; }
+    alt+k     { focus-window-up; }
+    alt+l     { focus-column-right; }
+    alt+shift+left  { focus-monitor-left; }
+    alt+shift+down  { focus-monitor-down; }
+    alt+shift+up    { focus-monitor-up; }
+    alt+shift+right { focus-monitor-right; }
+    alt+shift+h     { focus-monitor-left; }
+    alt+shift+j     { focus-monitor-down; }
+    alt+shift+k     { focus-monitor-up; }
+    alt+shift+l     { focus-monitor-right; }
+    alt+1 { focus-workspace 1; }
+    alt+2 { focus-workspace 2; }
+    alt+3 { focus-workspace 3; }
+    alt+4 { focus-workspace 4; }
+    alt+5 { focus-workspace 5; }
+    alt+6 { focus-workspace 6; }
+    alt+7 { focus-workspace 7; }
+    alt+8 { focus-workspace 8; }
+    alt+9 { focus-workspace 9; }
+    alt+ctrl+1 { move-column-to-workspace 1; }
+    alt+ctrl+2 { move-column-to-workspace 2; }
+    alt+ctrl+3 { move-column-to-workspace 3; }
+    alt+ctrl+4 { move-column-to-workspace 4; }
+    alt+ctrl+5 { move-column-to-workspace 5; }
+    alt+ctrl+6 { move-column-to-workspace 6; }
+    alt+ctrl+7 { move-column-to-workspace 7; }
+    alt+ctrl+8 { move-column-to-workspace 8; }
+    alt+ctrl+9 { move-column-to-workspace 9; }
+    alt+m { maximize-window-to-edges; }
     Alt+Ctrl+F { expand-column-to-available-width; }
     Alt+Minus { set-column-width "-10%"; }
     Alt+Equal { set-column-width "+10%"; }
