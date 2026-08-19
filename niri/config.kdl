@@ -40,9 +40,18 @@ layout {
     }
 
     border {
-        width 0
+        width 2
     }
 
+}
+
+workspace "1" {
+    layout {
+        default-column-width { proportion 1.0; }
+        border {
+            off
+        }
+    }
 }
 
 spawn-at-startup "noctalia"
@@ -56,11 +65,6 @@ prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-// Open all windows maximized by default.
-window-rule {
-    open-maximized true
-}
-
 window-rule {
     geometry-corner-radius 0
     clip-to-geometry true
@@ -73,13 +77,13 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot tmux new-session -A -s code; fi"; }
 
     // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+B hotkey-overlay-title="Run Chromium" { spawn "chromium-browser"; }
+    Mod+B hotkey-overlay-title="Run Chromium" { spawn "google-chrome"; }
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
     // Mod+I { spawn-sh "$HOME/.config/niri/status-osd.sh"; }
     Mod+I { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Shift+P {spawn-sh "noctalia msg panel-toggle session";}
     Mod+P { spawn "hyprpicker" "-a"; }
-    Alt+Shift+4 { spawn-sh "noctalia msg screenshot-region"; }
+    Alt+P { spawn-sh "noctalia msg screenshot-region"; }
     // Mod+P {
     //     spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
     // }
@@ -98,10 +102,8 @@ binds {
 
     mod+q repeat=false { close-window; }
 
-    alt+h     { focus-column-left; }
-    alt+j     { focus-window-down; }
-    alt+k     { focus-window-up; }
-    alt+l     { focus-column-right; }
+    mod+j     { focus-column-right-or-first; }
+    mod+k     { focus-column-left-or-last; }
     alt+shift+left  { focus-monitor-left; }
     alt+shift+down  { focus-monitor-down; }
     alt+shift+up    { focus-monitor-up; }
