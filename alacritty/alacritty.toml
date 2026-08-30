@@ -1,0 +1,28 @@
+general.import = ["~/.config/monos-themes/current/alacritty.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+size = 12
+
+[keyboard]
+bindings = [
+  { key = "Insert", mods = "Shift", action = "Paste" },
+  { key = "Insert", mods = "Control", action = "Copy" },
+  { key = "Key1", mods = "Control", chars = "\u00001" },
+  { key = "Key2", mods = "Control", chars = "\u00002" },
+  { key = "Key3", mods = "Control", chars = "\u00003" },
+  { key = "Key4", mods = "Control", chars = "\u00004" },
+  { key = "Key5", mods = "Control", chars = "\u00005" },
+  { key = "Key6", mods = "Control", chars = "\u00006" },
+  { key = "Key7", mods = "Control", chars = "\u00007" },
+  { key = "Key8", mods = "Control", chars = "\u00008" },
+  { key = "Key9", mods = "Control", chars = "\u00009" }
+]
+
+[window]
+opacity = 0.90

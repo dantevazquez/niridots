@@ -1,0 +1,66 @@
+/* Keep the bar and every module transparent. */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #ffffff;
+}
+
+#custom-power,
+#clock,
+#battery,
+#network,
+#taskbar {
+    background: transparent;
+    color: #ffffff;
+    margin: 0 8px;
+    padding: 0;
+}
+
+#custom-power {
+    font-size: 17px;
+}
+
+#custom-power:hover,
+#clock:hover,
+#battery:hover,
+#network:hover {
+    color: #ffffff;
+}
+
+#taskbar {
+    margin: 0;
+}
+
+#taskbar button {
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    margin: 0 4px 8px;
+    padding: 0 4px;
+}
+
+#taskbar button:hover {
+    color: #ffffff;
+}
+
+#taskbar button.active {
+    border-bottom-color: #ffffff;
+}
+
+#battery.warning {
+    color: #ffffff;
+}
+
+#battery.critical {
+    color: #ffffff;
+}
+
+#network.disconnected {
+    color: #ffffff;
+}
