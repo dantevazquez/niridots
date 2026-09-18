@@ -19,12 +19,12 @@ xwayland-satellite {
 }
 
 output "eDP-1" {
-    scale 2
+    scale 2.5
     transform "normal"
 }
 
 layout {
-    gaps 0
+    gaps 4
     
     center-focused-column "never"
 
@@ -54,8 +54,9 @@ workspace "1" {
     }
 }
 
+spawn-at-startup "pipewire"
 spawn-at-startup "noctalia"
-spawn-at-startup "sh" "-c" "cd \"$HOME/Downloads\" && nohup monosend receive --autoaccept >/dev/null 2>&1 &"
+// spawn-at-startup "sh" "-c" "cd \"$HOME/Downloads\" && nohup monosend receive --autoaccept >/dev/null 2>&1 &"
 
 hotkey-overlay {
     skip-at-startup
@@ -66,24 +67,31 @@ prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 window-rule {
-    geometry-corner-radius 0
+    geometry-corner-radius 12
     clip-to-geometry true
+}
+
+window-rule {
+    match app-id="yazi-chooser"
+    open-floating true
 }
 animations {
     off
 }
 
 binds {
-    Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot tmux new-session -A -s code; fi"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot -e tmux new-session -A -s code; fi"; }
 
     // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+B hotkey-overlay-title="Run Chromium" { spawn "google-chrome"; }
+    Mod+B hotkey-overlay-title="Open Chromium" { spawn "chromium"; }
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
     // Mod+I { spawn-sh "$HOME/.config/niri/status-osd.sh"; }
     Mod+I { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Shift+P {spawn-sh "noctalia msg panel-toggle session";}
     Mod+P { spawn "hyprpicker" "-a"; }
-    Alt+P { spawn-sh "noctalia msg screenshot-region"; }
+    Print { spawn "noctalia" "msg" "screenshot-region"; }
+    Ctrl+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+    Alt+P { spawn "noctalia" "msg" "screenshot-region"; }
     // Mod+P {
     //     spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
     // }
@@ -94,11 +102,13 @@ binds {
     // xf86monbrightnessup { spawn-sh "$home/.config/niri/brightness-osd.sh up"; }
     // xf86monbrightnessdown { spawn-sh "$home/.config/niri/brightness-osd.sh down"; }
 
-    xf86audioraisevolume { spawn-sh "noctalia msg volume-up"; }
-    xf86audiolowervolume { spawn-sh "noctalia msg volume-down"; }
-    xf86audiomute { spawn-sh "noctalia msg volume-mute"; }
-    xf86monbrightnessup { spawn-sh "noctalia msg brightness-up"; }
-    xf86monbrightnessdown { spawn-sh "noctalia msg brightness-down"; }
+    // Audio & Brightness (ThinkPad X1 Carbon Gen 9)
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
 
     mod+q repeat=false { close-window; }
 
