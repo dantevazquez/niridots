@@ -19,7 +19,7 @@ order = [ "default" ]
 
     [bar.default]
     auto_hide = false
-    background_opacity = 1.0
+    background_opacity = 0.89999997615814209
     border = "outline"
     border_width = 0.0
     capsule = false
@@ -29,32 +29,32 @@ order = [ "default" ]
     capsule_padding = 6.0
     capsule_thickness = 0.75999999046325684
     center = [ "taskbar" ]
-    concave_edge_corners = true
+    concave_edge_corners = false
     contact_shadow = false
     enabled = true
-    end = [ "media", "tray", "network", "battery", "clock" ]
-    font_family = "JetBrainsMono Nerd Font Mono"
+    end = [ "battery", "clock" ]
+    font_scale = 1.0
     font_weight = 500
     hover_highlight = true
     layer = "top"
-    margin_edge = 0
-    margin_ends = 0
+    margin_edge = 4
+    margin_ends = 420
     margin_opposite_edge = 0
     padding = 14
     panel_overlap = 1
     position = "top"
-    radius = 0
-    radius_bottom_left = 0
-    radius_bottom_right = 0
-    radius_top_left = 0
-    radius_top_right = 0
+    radius = 12
+    radius_bottom_left = 12
+    radius_bottom_right = 12
+    radius_top_left = 12
+    radius_top_right = 12
     reserve_space = true
     scale = 1.0
-    shadow = false
+    shadow = true
     show_on_workspace_switch = true
     smart_auto_hide = false
-    start = [ "workspaces" ]
-    thickness = 34
+    start = [ "control-center" ]
+    thickness = 30
     widget_spacing = 6
 
         [bar.default.dead_zone]
@@ -70,18 +70,19 @@ sync_all_monitors = false
 
 [calendar]
 enabled = false
+event_date_format = "%A %e %B"
+event_time_format = "%H:%M"
 refresh_minutes = 15
 
 [control_center]
 hidden_tabs = []
+show_session_button = true
 show_shortcut_labels = true
 sidebar = "compact"
 sidebar_section = "compact"
 width = 700
 
     [control_center.calendar]
-    event_date_format = "%A %e %B"
-    event_time_format = "%H:%M"
     show_events_card = true
     show_week_numbers = false
 
@@ -145,7 +146,7 @@ radius_bottom_left = 16
 radius_bottom_right = 16
 radius_top_left = 16
 radius_top_right = 16
-reserve_space = false
+reserve_space = true
 shadow = true
 show_dots = false
 show_instance_count = true
@@ -200,6 +201,7 @@ pre_action_fade_seconds = 2.0
     action = "lock"
     command = ""
     enabled = true
+    locked_timeout = 0.0
     resume_command = ""
     timeout = 600.0
 
@@ -207,6 +209,7 @@ pre_action_fade_seconds = 2.0
     action = "lock_and_suspend"
     command = ""
     enabled = true
+    locked_timeout = 0.0
     resume_command = ""
     timeout = 900.0
 
@@ -214,8 +217,9 @@ pre_action_fade_seconds = 2.0
     action = "screen_off"
     command = ""
     enabled = true
+    locked_timeout = 0.0
     resume_command = ""
-    timeout = 660.0
+    timeout = 600.0
 
 [keybinds]
 cancel = [ "Escape" ]
@@ -232,7 +236,7 @@ validate = [ "Return", "KP_Enter", "space" ]
 
 [location]
 address = ""
-auto_locate = true
+auto_locate = false
 custom_schedule = false
 sunrise = ""
 sunset = ""
@@ -243,6 +247,7 @@ blur_intensity = 0.5
 blurred_desktop = false
 enabled = true
 fingerprint = true
+lock_before_suspend = true
 monitors = []
 tint_intensity = 0.30000001192092896
 wallpaper = ""
@@ -258,12 +263,14 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
     visible = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
-    box_height = 229.0
+    box_height = 196.0
     box_width = 810.0
     cx = 768.0
-    cy = 761.5
+    cy = 814.4000244140625
     enabled = true
     output = "eDP-1"
+    placement_height = 960.0
+    placement_width = 1536.0
     rotation = 0.0
     type = "login_box"
 
@@ -280,6 +287,7 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_login_button = true
         show_media = true
         show_session_buttons = true
+        show_unlock_hint = true
         show_weather = true
 
 [nightlight]
@@ -294,7 +302,9 @@ border = true
 collapse_on_dismiss = true
 enable_daemon = true
 history_retention_hours = 0
+keep_dismissed_in_history = true
 layer = "top"
+max_visible = 0
 monitors = []
 offset_x = 20
 offset_y = 8
@@ -335,7 +345,7 @@ scale = 1.0
 [plugin_settings]
 
 [plugins]
-auto_update = true
+auto_update = "all"
 enabled = []
 
     [[plugins.source]]
@@ -365,22 +375,23 @@ corner_radius_scale = 1.0
 date_format = "%A, %x"
 disable_mipmaps = false
 external_ip_enabled = false
-font_family = "JetBrainsMono Nerd Font Mono"
+font_family = "JetBrainsMono NF"
 input_borders = true
 launch_apps_as_systemd_services = false
 launch_apps_custom_command = ""
 niri_overview_type_to_launch_enabled = false
 offline_mode = false
 password_style = "default"
-polkit_agent = true
+polkit_agent = false
 popup_borders = true
 popup_shadows = true
 screen_time_enabled = false
 settings_show_advanced = true
+settings_window_translucent = false
 setup_wizard_enabled = true
 shared_gl_context = true
 show_location = true
-telemetry_enabled = true
+telemetry_enabled = false
 time_format = "{:%H:%M}"
 
     [shell.animation]
@@ -390,13 +401,18 @@ time_format = "{:%H:%M}"
     [shell.greeter_sync]
     auto_sync = false
 
+    [shell.keyboard_layout]
+
     [shell.launcher]
     app_grid = false
     auto_paste = "auto"
     categories = true
-    compact = false
+    compact = true
     fetch_exchange_rates = true
+    pinned = []
     provider_prefix = "/"
+    show_app_actions = false
+    show_app_origin_indicator = true
     show_icons = true
     sort_by_usage = true
 
@@ -423,10 +439,10 @@ time_format = "{:%H:%M}"
     open_near_click_wallpaper = false
     polkit_placement = "floating"
     polkit_position = "center"
-    session_placement = "attached"
+    session_placement = "floating"
     session_position = "auto"
     shadow = true
-    transparency_mode = "solid"
+    transparency_mode = "soft"
     wallpaper_placement = "attached"
     wallpaper_position = "auto"
 
@@ -436,10 +452,12 @@ time_format = "{:%H:%M}"
     screen_filter_regex = ""
 
     [shell.screen_corners]
-    enabled = true
+    enabled = false
     size = 32
 
     [shell.screenshot]
+    annotate = false
+    close_on_copy = true
     confirm_region = false
     copy_to_clipboard = true
     directory = ""
@@ -512,11 +530,16 @@ time_format = "{:%H:%M}"
     alpha = 0.55000001192092896
     direction = "down"
 
+    [shell.window_switcher]
+    mru = false
+
 [storage]
 key_file = ""
 key_source = "secret-service"
 
 [system.monitor]
+cpu_freq_activity_threshold = 2.5
+cpu_freq_critical_threshold = 4.5
 cpu_poll_seconds = 2.0
 cpu_temp_activity_threshold = 60.0
 cpu_temp_critical_threshold = 85.0
@@ -552,22 +575,23 @@ swap_pct_activity_threshold = 20.0
 swap_pct_critical_threshold = 80.0
 
 [theme]
-builtin = "Catppuccin"
-community_palette = "Catppuccin Frappe Blue"
+builtin = "Noctalia"
+community_palette = "Catppuccin Frappe Rosewater"
 custom_palette = ""
 mode = "dark"
 pure_black_dark = false
+shell_mode = "follow"
 source = "community"
-wallpaper_scheme = "m3-fruit-salad"
+wallpaper_scheme = "m3-content"
 
     [theme.templates]
-    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "niri", "qt" ]
-    community_ids = [ "lazygit", "yazi" ]
+    builtin_ids = [ "alacritty", "gtk3", "gtk4", "niri", "qt" ]
+    community_ids = []
     enable_builtin_templates = true
     enable_community_templates = true
 
 [wallpaper]
-directory = ""
+directory = "/home/void/Pictures/walls"
 directory_dark = ""
 directory_light = ""
 edge_smoothness = 0.30000001192092896
@@ -598,23 +622,14 @@ min_length = 80.0
 title_scroll = "none"
 type = "active_window"
 
-[widget.bar]
-type = "icefish/phone-connect:bar"
-
 [widget.battery]
 show_label = false
 type = "battery"
 
-[widget.bluetooth]
-enabled = false
-type = "bluetooth"
-
-[widget.brightness]
-enabled = false
-type = "brightness"
-
-[widget.cat]
-type = "dotnetrob/cat:cat"
+[widget.control-center]
+font_family = "JetBrainsMono NF"
+glyph = "building"
+type = "control-center"
 
 [widget.cpu]
 stat = "cpu_usage"
@@ -642,15 +657,10 @@ type = "lock_keys"
 
 [widget.media]
 art_size = 16.0
-hide_when_no_media = true
 max_length = 220.0
 min_length = 80.0
 title_scroll = "none"
 type = "media"
-
-[widget.network]
-show_label = false
-type = "network"
 
 [widget.network_rx]
 stat = "net_rx"
@@ -675,11 +685,3 @@ type = "spacer"
 [widget.temp]
 stat = "cpu_temp"
 type = "sysmon"
-
-[widget.volume]
-enabled = false
-type = "volume"
-
-[widget.workspaces]
-hide_when_empty = true
-type = "workspaces"
