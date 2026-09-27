@@ -1,0 +1,76 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 20,
+    "spacing": 8,
+    "margin-top": 2,
+    "margin-left": 10,
+    "margin-right": 10,
+
+    "modules-left": [
+        "custom/power"
+    ],
+    "modules-center": [
+        "wlr/taskbar"
+    ],
+    "modules-right": [
+        "battery",
+        "network",
+        "clock"
+    ],
+
+    "custom/power": {
+        "format": "󰐥",
+        "tooltip": false,
+        "on-click": "systemctl poweroff",
+        "on-click-right": "systemctl reboot"
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 18,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%a, %b %d  %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "{0:%A, %B %d, %Y}\nWeek {0:%V}"
+    },
+
+    "battery": {
+        "format": "{icon}",
+        "format-charging": "󰂄",
+        "format-plugged": "󰚥",
+        "format-icons": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ],
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "tooltip-format": "{capacity}%"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 ",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip-format-wifi": "{essid}\nSignal: {signalStrength}%\n{ipaddr}",
+        "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
+        "tooltip-format-disconnected": "Network disconnected",
+        "on-click": "wifi-settings"
+    }
+}

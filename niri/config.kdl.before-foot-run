@@ -1,32 +1,28 @@
-// options
 input {
     keyboard {
         xkb {
             options "caps:escape"
         }
+
         numlock
     }
 
     touchpad {
         tap
+        // scroll-factor 0.1
         dwt
     }
 
 }
 xwayland-satellite {
+  off
 }
-hotkey-overlay {
-    skip-at-startup
-}
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-// monitor
 output "eDP-1" {
     scale 2.5
     transform "normal"
 }
 
-// look
 layout {
     gaps 0
     
@@ -48,12 +44,7 @@ layout {
     }
 
 }
-animations {
-    off
-}
-prefer-no-csd
 
-// rules
 workspace "1" {
     layout {
         default-column-width { proportion 1.0; }
@@ -62,52 +53,76 @@ workspace "1" {
         }
     }
 }
-window-rule {
-    geometry-corner-radius 0
-    clip-to-geometry true
-}
-window-rule {
-    match app-id="yazi-chooser"
-    open-floating true
-    border {
-        on
-        width 2
-    }
-}
-window-rule {
-    match app-id="^foot-run$"
-    open-floating true
-    border {
-        on
-        width 2
-    }
-    default-column-width { proportion 0.7; }
-    default-window-height { proportion 0.7; }
-}
 
-// startup
 spawn-at-startup "pipewire"
+// spawn-at-startup "noctalia"
 spawn-at-startup "waybar"
 spawn-sh-at-startup "swaybg -i ~/.config/niri/wall.jpg -m fill"
 spawn-at-startup "swayidle" "-w"
 spawn-at-startup "mako"
 
-// binds
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="yazi-chooser"
+    open-floating true
+}
+animations {
+    off
+}
+
 binds {
-    Alt+F { fullscreen-window; }
-    XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot -e tmux new-session -A -s code; fi"; }
+
+    // Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+B hotkey-overlay-title="Open Chromium" { spawn "chromium"; }
+    // Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+Space { spawn-sh "menew"; }
+    // Mod+I { spawn-sh "$HOME/.config/niri/status-osd.sh"; }
+    Mod+I { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Shift+P {spawn-sh "noctalia msg panel-toggle session";}
     Mod+P { spawn "hyprpicker" "-a"; }
     Print { screenshot; }
+    // Print { spawn "noctalia" "msg" "screenshot-region"; }
+    // Ctrl+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+    // Alt+P { spawn "noctalia" "msg" "screenshot-region"; }
+    // Mod+P {
+    //     spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +'%Y-%m-%d_%H-%M-%S').png | wl-copy"
+    // }
+    // Audio & Brightness
+    // xf86audioraisevolume { spawn-sh "$Home/.config/niri/volume-osd.sh up"; }
+    // xf86audiolowervolume { spawn-sh "$Home/.config/niri/volume-osd.sh down"; }
+    // xf86audiomute { spawn-sh "$Home/.config/niri/volume-osd.sh mute"; }
+    // xf86monbrightnessup { spawn-sh "$Home/.config/niri/brightness-osd.sh up"; }
+    // xf86monbrightnessdown { spawn-sh "$Home/.config/niri/brightness-osd.sh down"; }
+
+    // Audio & Brightness (ThinkPad X1 Carbon Gen 9)
     XF86AudioRaiseVolume allow-when-locked=true { spawn "/home/dante/.config/niri/volume-osd.sh" "up"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "/home/dante/.config/niri/volume-osd.sh" "down"; }
     XF86AudioMute allow-when-locked=true { spawn "/home/dante/.config/niri/volume-osd.sh" "mute"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn "/home/dante/.config/niri/brightness-osd.sh" "up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "/home/dante/.config/niri/brightness-osd.sh" "down"; }
-    Mod+Q repeat=false { close-window; }
-    Alt+Q {quit;}
+    // XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    // XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    // XF86AudioMicMute     allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+    // XF86MonBrightnessUp   allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    // XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    mod+q repeat=false { close-window; }
+
+    mod+j     { focus-column-right-or-first; }
+    mod+k     { focus-column-left-or-last; }
     alt+shift+left  { focus-monitor-left; }
     alt+shift+down  { focus-monitor-down; }
     alt+shift+up    { focus-monitor-up; }
@@ -125,15 +140,15 @@ binds {
     alt+7 { focus-workspace 7; }
     alt+8 { focus-workspace 8; }
     alt+9 { focus-workspace 9; }
-    alt+shift+1 { move-column-to-workspace 1; }
-    alt+shift+2 { move-column-to-workspace 2; }
-    alt+shift+3 { move-column-to-workspace 3; }
-    alt+shift+4 { move-column-to-workspace 4; }
-    alt+shift+5 { move-column-to-workspace 5; }
-    alt+shift+6 { move-column-to-workspace 6; }
-    alt+shift+7 { move-column-to-workspace 7; }
-    alt+shift+8 { move-column-to-workspace 8; }
-    alt+shift+9 { move-column-to-workspace 9; }
+    alt+ctrl+1 { move-column-to-workspace 1; }
+    alt+ctrl+2 { move-column-to-workspace 2; }
+    alt+ctrl+3 { move-column-to-workspace 3; }
+    alt+ctrl+4 { move-column-to-workspace 4; }
+    alt+ctrl+5 { move-column-to-workspace 5; }
+    alt+ctrl+6 { move-column-to-workspace 6; }
+    alt+ctrl+7 { move-column-to-workspace 7; }
+    alt+ctrl+8 { move-column-to-workspace 8; }
+    alt+ctrl+9 { move-column-to-workspace 9; }
     alt+m { maximize-window-to-edges; }
     Alt+Ctrl+F { expand-column-to-available-width; }
     Alt+Minus { set-column-width "-10%"; }

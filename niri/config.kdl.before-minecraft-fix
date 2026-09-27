@@ -14,6 +14,7 @@ input {
 
 }
 xwayland-satellite {
+  off
 }
 hotkey-overlay {
     skip-at-startup
@@ -94,7 +95,6 @@ spawn-at-startup "mako"
 
 // binds
 binds {
-    Alt+F { fullscreen-window; }
     XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: foot" { spawn-sh "if tmux display-message -p -t code '#{session_attached}' 2>/dev/null | grep -q '^[1-9]'; then foot; else foot -e tmux new-session -A -s code; fi"; }
     Mod+B hotkey-overlay-title="Open Chromium" { spawn "chromium"; }
@@ -152,3 +152,4 @@ binds {
 }
 
 include "noctalia.kdl"
+
