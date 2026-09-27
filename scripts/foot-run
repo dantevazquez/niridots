@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Launch a command in Foot; the matching Niri rule floats and centers it.
+set -euo pipefail
+
+if (( $# == 0 )); then
+    printf 'Usage: foot-run COMMAND [ARGUMENTS...]\n' >&2
+    exit 2
+fi
+
+if [[ $1 == --help || $1 == -h ]]; then
+    printf 'Usage: foot-run COMMAND [ARGUMENTS...]\nExample: foot-run impala\n'
+    exit 0
+fi
+
+exec foot --app-id=foot-run -- "$@"

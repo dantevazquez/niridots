@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Toggle the swayidle daemon configured by ~/.config/swayidle/config.
+set -euo pipefail
+
+idle_running() {
+  pgrep -u "$UID" -x swayidle >/dev/null
+}
+
+case "${1:-toggle}" in
+  toggle)
+    # Serialize clicks so two rapid clicks cannot start duplicate daemons.
+    exec 9>"${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is not set}/caffeinate.lock"
+    flock 9
+    if idle_running; then
+      pkill -TERM -u "$UID" -x swayidle
+      for ((attempt = 0; attempt < 50; attempt++)); do
+        idle_running || exit 0
+        sleep 0.02
+      done
+      echo 'caffeinate: swayidle did not stop' >&2
+      exit 1
+    else
+      nohup swayidle -w </dev/null >/dev/null 2>&1 9>&- &
+      sleep 0.1
+      idle_running || { echo 'caffeinate: could not start swayidle' >&2; exit 1; }
+    fi
+    ;;
+  status)
+    if idle_running; then
+      printf '%s\n' '{"text":"","class":"inactive","tooltip":"Caffeinate off — click to keep awake"}'
+    else
+      printf '%s\n' '{"text":"","class":"active","tooltip":"Caffeinate on — click to restore automatic lock and sleep"}'
+    fi
+    ;;
+  *)
+    echo 'Usage: caffeinate [toggle|status]' >&2
+    exit 2
+    ;;
+esac

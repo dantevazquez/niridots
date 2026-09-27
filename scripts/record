@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if pgrep -u "$UID" -x wf-recorder >/dev/null; then
+  pkill -INT -u "$UID" -x wf-recorder
+else
+  mkdir -p "$HOME/Videos/Recordings"
+  nohup wf-recorder --audio "$@" -f "$HOME/Videos/Recordings/$(date +%Y-%m-%d_%H-%M-%S).mp4" >/dev/null 2>&1 </dev/null &
+fi

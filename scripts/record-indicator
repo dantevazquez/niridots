@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Waybar custom module JSON; empty text hides the indicator while idle.
+if pgrep -u "$UID" -x wf-recorder >/dev/null; then
+  printf '%s\n' '{"text":"⏺","class":"active","tooltip":"Recording — click to stop"}'
+else
+  printf '%s\n' '{"text":"","class":"inactive","tooltip":""}'
+fi
